@@ -45,33 +45,42 @@ fun MyApp(modifier: Modifier = Modifier) {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     val expanded = remember { mutableStateOf(false) }
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
+
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(
-                    text = "Hello",
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = name,
-                    style = MaterialTheme.typography.headlineLarge
-                )
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = "Hello",
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                }
+                ElevatedButton(onClick = { expanded.value = !expanded.value }) {
+                    Text(if (expanded.value) "Show less" else "Show more")
+                }
             }
-            ElevatedButton(onClick = { expanded.value = !expanded.value }) {
-                Text(if (expanded.value) "Show less" else "Show more")
-            }
+            Spacer(modifier = Modifier.height(extraPadding))
         }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
